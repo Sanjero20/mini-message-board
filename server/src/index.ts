@@ -1,20 +1,18 @@
-import express, { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import router from './routes/route';
-
 dotenv.config();
 
-const port = 3000;
+import express, { Request, Response } from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import router from './routes/route';
+
+const port = 5000;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Routers
-app.get('/', (req: Request, res: Response) => {
-  res.json({ text: 'Hello World' });
-});
-
 app.use(router);
 
 // Listener
