@@ -17,10 +17,9 @@ router.post('/new', async (req: Request, res: Response) => {
 
   try {
     const response = await newMessage.save();
-    res.json(response);
+    res.json({ error: false, data: response });
   } catch (error) {
-    console.log('Something went wrong', error);
-    res.status(500).json({ error });
+    res.status(500).json({ error: true, data: null });
   }
 });
 
