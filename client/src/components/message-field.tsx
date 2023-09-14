@@ -1,7 +1,14 @@
-import { sendMessageToDB } from "@/services/message";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Message } from "@/types/messages";
+import { sendMessageToDB } from "@/services/message";
 
-function MessageField() {
+type MessageFieldProps = {
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+};
+
+function MessageField({ setMessages }: MessageFieldProps) {
   const [text, setText] = useState("");
 
   const handleText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -11,24 +18,27 @@ function MessageField() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await sendMessageToDB({ user: "", text });
+
+    const response = await sendMessageToDB({ user: "", text });
+    const { data, error } = response;
+
+    if (error || !data) return;
+
     setText("");
+    setMessages((prevState) => [...prevState, data]);
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <label htmlFor="input-message">Message</label>
-      <input
+    <form onSubmit={(e) => handleSubmit(e)} className="flex gap-2">
+      <Input
         type="text"
-        id="input-message"
-        className="rounded border border-black p-2"
         value={text}
         onChange={(e) => handleText(e)}
         autoComplete="off"
         placeholder="Enter a message"
       />
 
-      <button className="bg-sky-400 px-6 py-2">Submit</button>
+      <Button className="w-36">Submit</Button>
     </form>
   );
 }
