@@ -4,3 +4,8 @@ export type Message = {
   text: string;
   added: Date;
 };
+
+export type NewMessage = {
+  user: string;
+  text: string;
+};

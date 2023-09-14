@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Message } from "./types/messages";
+import { getAllMessages, sendMessageToDB } from "./services/message";
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -8,9 +9,8 @@ function App() {
 
   useEffect(() => {
     async function fetchMessages() {
-      const response = await fetch("http://localhost:5000/");
-      const messages = await response.json();
-      setMessages([...messages]);
+      const messages = await getAllMessages();
+      setMessages(messages);
     }
 
     fetchMessages();
@@ -18,18 +18,7 @@ function App() {
 
   const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
-
-    await fetch("http://localhost:5000/new", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text,
-        user,
-      }),
-    });
-
+    await sendMessageToDB({ text, user });
     setText("");
   };
 
