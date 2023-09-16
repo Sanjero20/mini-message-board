@@ -1,4 +1,5 @@
 import { Message } from "@/types/messages";
+import MessageCard from "./ui/message-card";
 
 type MessageListProps = {
   messages: Message[];
@@ -6,13 +7,10 @@ type MessageListProps = {
 
 function MessageList({ messages }: MessageListProps) {
   return (
-    <section className="flex flex-1 flex-col gap-1">
+    <section className="flex flex-1 flex-col gap-2 p-4">
       {messages.length != 0 &&
         messages.map((message) => (
-          <div key={message._id} className="w-fit border p-1">
-            <p>{message.user}</p>
-            <p>{message.text}</p>
-          </div>
+          <MessageCard key={message._id} message={message} />
         ))}
     </section>
   );
