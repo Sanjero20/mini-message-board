@@ -23,7 +23,7 @@ function MessageField({ setMessages }: MessageFieldProps) {
 
     setIsSending(true);
 
-    const response = await sendMessageToDB({ user: "", text });
+    const response = await sendMessageToDB({ user: "Anonymous", text });
     const { data, error } = response;
 
     if (error || !data) return;
@@ -34,7 +34,7 @@ function MessageField({ setMessages }: MessageFieldProps) {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="flex gap-2">
+    <form onSubmit={(e) => handleSubmit(e)} className="flex gap-2 px-2 pb-1">
       <Input
         type="text"
         value={text}

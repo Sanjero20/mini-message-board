@@ -23,7 +23,8 @@ function App() {
       <main className="container flex h-full flex-col gap-1 rounded-md border bg-white p-2 shadow">
         <h1 className="mx-auto text-3xl font-bold">MINI MESSAGE BOARD</h1>
         <Separator />
-        <div className="flex h-full flex-col gap-2">
+
+        <div className="flex h-full flex-col justify-between gap-2 overflow-hidden">
           <MessageList messages={messages} />
           <Separator />
           <MessageField setMessages={setMessages} />
