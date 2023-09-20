@@ -3,7 +3,7 @@ function parseISODate(ISODate: string) {
 
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
-    month: "long",
+    month: "2-digit",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",

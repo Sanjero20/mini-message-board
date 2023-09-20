@@ -10,9 +10,9 @@ function MessageCard({ message }: MessageCardProps) {
     <div>
       <div className="flex items-center gap-1">
         <strong>{message.user}</strong>
-        <em className="text-sm text-slate-500">
+        <p className="text-xs text-slate-500 sm:text-sm">
           {parseISODate(message.added)}
-        </em>
+        </p>
       </div>
 
       <p>{message.text}</p>
