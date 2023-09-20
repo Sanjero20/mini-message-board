@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Header from "./components/header";
 import MessageList from "./components/message-list";
 import MessageField from "./components/message-field";
 import { Separator } from "./components/ui/separator";
@@ -21,7 +22,8 @@ function App() {
   return (
     <div className="h-screen bg-background p-4">
       <main className="container flex h-full flex-col gap-1 rounded-md border bg-white p-2 shadow">
-        <h1 className="mx-auto text-3xl font-bold">MINI MESSAGE BOARD</h1>
+        <Header />
+
         <Separator />
 
         <div className="flex h-full flex-col justify-between gap-2 overflow-hidden">
