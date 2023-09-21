@@ -4,19 +4,21 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { sendMessageToDB } from "@/services/message";
 import useMessages from "@/stores/messages";
+import useUsername from "@/stores/user";
 
 function MessageField() {
   const [text, setText] = useState("");
   const [isSending, setIsSending] = useState(false);
 
   const { addMessage } = useMessages();
+  const { username } = useUsername();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     setIsSending(true);
 
-    const response = await sendMessageToDB({ user: "Anonymous", text });
+    const response = await sendMessageToDB({ user: username, text });
     const { data, error } = response;
 
     if (error || !data) return;

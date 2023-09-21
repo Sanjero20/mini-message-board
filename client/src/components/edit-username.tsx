@@ -1,4 +1,6 @@
-import { UserCog } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
+import { UserCog, X } from "lucide-react";
+import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,10 +11,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import useUsername from "@/stores/user";
 
 function EditUsername() {
+  const [tempName, setTempName] = useState("");
+  const [open, setOpen] = useState(false);
+  const { username, setUsername } = useUsername();
+
+  useEffect(() => {
+    setTempName(username);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const cancelNameChange = () => {};
+
+  const saveNameChange = (e: FormEvent) => {
+    e.preventDefault();
+    setUsername(tempName);
+    setOpen(false);
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       {/* Trigger */}
       <DialogTrigger asChild>
         <Button variant="outline" size="icon">
@@ -22,21 +42,38 @@ function EditUsername() {
 
       {/* Main */}
       <DialogContent className="sm:max-w-[425px]">
+        {/* Close Icon */}
+        <DialogClose
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100"
+          onClick={cancelNameChange}
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </DialogClose>
+
         <DialogHeader>
           <DialogTitle>Edit Username</DialogTitle>
         </DialogHeader>
 
-        <div className="flex items-center">
+        <form
+          className="flex items-center"
+          onSubmit={(e) => saveNameChange(e)}
+          id="username"
+        >
           <Input
             id="name"
             className=""
+            value={tempName}
+            onChange={(e) => setTempName(e.target.value)}
             autoComplete="off"
             placeholder="Username"
           />
-        </div>
+        </form>
 
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
+        <DialogFooter className="flex">
+          <Button type="submit" form="username">
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
