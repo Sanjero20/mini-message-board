@@ -1,22 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Message } from "@/types/messages";
 import { sendMessageToDB } from "@/services/message";
+import useMessages from "@/stores/messages";
 
-type MessageFieldProps = {
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-};
-
-function MessageField({ setMessages }: MessageFieldProps) {
+function MessageField() {
   const [text, setText] = useState("");
   const [isSending, setIsSending] = useState(false);
 
-  const handleText = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setText(value);
-  };
+  const { addMessage } = useMessages();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,7 +23,7 @@ function MessageField({ setMessages }: MessageFieldProps) {
 
     setText("");
     setIsSending(false);
-    setMessages((prevState) => [...prevState, data]);
+    addMessage(data);
   };
 
   return (
@@ -38,7 +31,7 @@ function MessageField({ setMessages }: MessageFieldProps) {
       <Input
         type="text"
         value={text}
-        onChange={(e) => handleText(e)}
+        onChange={(e) => setText(e.target.value)}
         autoComplete="off"
         placeholder="Enter a message"
       />

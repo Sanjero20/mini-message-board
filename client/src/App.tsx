@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "./components/header";
 import MessageList from "./components/message-list";
 import MessageField from "./components/message-field";
 import { Separator } from "./components/ui/separator";
-import { Message } from "./types/messages";
 import { getAllMessages } from "@/services/message";
+import useMessages from "./stores/messages";
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  // const [user, setUser] = useState("Anonymous");
+  const { setMessages } = useMessages();
 
   useEffect(() => {
     async function fetchMessages() {
@@ -17,6 +16,7 @@ function App() {
     }
 
     fetchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -27,9 +27,9 @@ function App() {
         <Separator />
 
         <div className="flex h-full flex-col justify-between gap-2 overflow-hidden">
-          <MessageList messages={messages} />
+          <MessageList />
           <Separator />
-          <MessageField setMessages={setMessages} />
+          <MessageField />
         </div>
       </main>
     </div>
