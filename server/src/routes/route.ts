@@ -11,7 +11,7 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/new', async (req: Request, res: Response) => {
   const newMessage = new Message({
     text: req.body.text,
-    user: req.body.user,
+    user: req.body.user.trim() || 'Anonymous',
     added: new Date().toISOString(),
   });
 
