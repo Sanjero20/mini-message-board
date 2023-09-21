@@ -29,7 +29,7 @@ function MessageField() {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="flex gap-2 px-2 pb-1">
+    <form onSubmit={(e) => handleSubmit(e)} className="flex gap-2 p-2 pb-1">
       <Input
         type="text"
         value={text}

@@ -26,7 +26,7 @@ function App() {
 
         <Separator />
 
-        <div className="flex h-full flex-col justify-between gap-2 overflow-hidden">
+        <div className="flex h-full flex-col justify-between overflow-hidden">
           <MessageList />
           <Separator />
           <MessageField />
