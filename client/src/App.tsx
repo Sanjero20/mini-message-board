@@ -1,18 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/header";
 import MessageList from "./components/message-list";
 import MessageField from "./components/message-field";
 import { Separator } from "./components/ui/separator";
 import { getAllMessages } from "@/services/message";
 import useMessages from "./stores/messages";
+import MessageLoading from "./components/message-loading";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const { setMessages } = useMessages();
 
   useEffect(() => {
     async function fetchMessages() {
       const messages = await getAllMessages();
+
       setMessages(messages);
+      setIsLoading(false);
     }
 
     fetchMessages();
@@ -27,7 +31,7 @@ function App() {
         <Separator />
 
         <div className="flex h-full flex-col justify-between overflow-hidden">
-          <MessageList />
+          {isLoading ? <MessageLoading /> : <MessageList />}
           <Separator />
           <MessageField />
         </div>

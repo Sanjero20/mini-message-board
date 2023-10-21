@@ -34,7 +34,7 @@ function EditUsername() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {/* Trigger */}
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="absolute right-0">
         <Button variant="outline" size="icon">
           <UserCog />
         </Button>
